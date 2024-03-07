@@ -17,6 +17,7 @@ export default function Header() {
     //-->Navbar.collapse
     //-><Navbar.Link active={path=== "/project" } > <Link to='/project'>Projects</Link></Navbar.Link> 
     //-->hidden sm:inline
+    //-->outline
 
     <Navbar className='border-b-2'>
       {/* abhinav blog */}
@@ -49,7 +50,7 @@ export default function Header() {
         </Button>
         
         <Link to='/sign-in'>
-          <Button gradientDuoTone='purpleToBlue' pill>
+          <Button gradientDuoTone='purpleToBlue'outline  pill>
             Sign In
           </Button>
         </Link>
