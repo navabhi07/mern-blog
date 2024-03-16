@@ -34,14 +34,7 @@ const handleSubmit = async (e) => {
     {
       navigate('/sign-in')
     };
-    // if(data.ok)
-    // {
-    //   Navigate('/sign-in')
-    // }
-   // console.log(data);
-  
-    
-  //  if(data.success===false )console.log('duplicate');
+   
     setLoading(false);
     
    
