@@ -1,49 +1,47 @@
 import { Button, Label, Spinner, TextInput } from 'flowbite-react';
 import React, { useState } from 'react'
-import { Link,Navigate,useNavigate } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import axios from "axios";
+import { useDispatch,useSelector } from 'react-redux';
+import { signInStart,signInSuccess,signInFailure } from '../redux/user/userSlice';
+
 
 export default function Signin() {
    const [formData,setFormData]=useState({});
-   const [errorMessage, setErrorMessage] = useState(null);
-   const [loading, setLoading] = useState(false);
+   const {loading,error:errorMessage}=useSelector(state=>state.user);
+
+   const dispatch=useDispatch();
    const navigate = useNavigate();
     const handleChange=(e)=>{
   setFormData({...formData,[e.target.id]:e.target.value.trim()});
    };
 
    
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  
-  if (!formData.email || !formData.password) {
-    return setErrorMessage('Please fill out all fields.'); 
-  }
+   const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!formData.email || !formData.password) {
+      return dispatch(signInFailure('Please fill all the fields'));
+    }
+    try {
+      dispatch(signInStart());
+      const res = await fetch('/api/auth/signin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(signInFailure(data.message));
+      }
 
-  try {
-    setLoading(true);
-    setErrorMessage(null);
-    const res = await axios.post('/api/auth/signin', formData, {
-      headers: { 'Content-Type': 'application/json' },
-    });
-
-    const status = res.status;
-    const data=res.data;
-    console.log(data);
-    if(status==200)
-    {
-      navigate('/');
-    };
-   
-    setLoading(false);
-    
-   
-  } catch(error) {
-    console.error('Signin failed:', error);
-    setErrorMessage('Failed  to sign in . Please try again later.');   
-    //setLoading(false); 
-  }
-};
+      if (res.ok) {
+        dispatch(signInSuccess(data));
+        navigate('/');
+      }
+    } catch (error) {
+      dispatch(signInFailure(error.message));
+    }
+  };
 
 
   return (
@@ -91,7 +89,7 @@ const handleSubmit = async (e) => {
                  />
 
             </div>
-{/* sign up button */}
+{/* sign in button */}
             <Button gradientDuoTone='purpleToPink' type='submit' disabled={loading}>
             {loading ? (
                 <>
