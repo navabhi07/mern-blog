@@ -3,12 +3,15 @@ import { Link,useLocation } from 'react-router-dom';
 import React from 'react';
 import {AiOutlineSearch }from 'react-icons/ai';
 import{FaMoon}from 'react-icons/fa';
-import {useSelector} from 'react-redux';
+import {useSelector,useDispatch} from 'react-redux';
+import { toggleTheme } from '../redux/theme/themeSlice';
+
 
 
 export default function Header() {
   //for activing the path name 
   const path=useLocation().pathname;
+  const dispatch=useDispatch();
   const {currentUser}=useSelector(state=>state.user);
   return (
     //IMPORTANT CONCEPT 
@@ -47,7 +50,7 @@ export default function Header() {
 
       {/* sigin + Famoon */}
       <div className="flex gap-2 md:order-2">
-        <Button className='w-12 h-10 hidden sm:inline' color='gray' pill>
+        <Button className='w-12 h-10 hidden sm:inline' color='gray' pill  onClick={()=>dispatch(toggleTheme())}>
           <FaMoon />
         </Button>
 
