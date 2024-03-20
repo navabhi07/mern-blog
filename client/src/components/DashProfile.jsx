@@ -19,6 +19,7 @@ import {
     deleteUserStart,
     deleteUserSuccess,
     deleteUserFailure,
+    signoutSuccess,
     
     
   } from '../redux/user/userSlice';
@@ -165,7 +166,21 @@ const handleDeleteUser = async () => {
     dispatch(deleteUserFailure(error.message));
   }
 };
-
+const handleSignout = async () => {
+  try {
+    const res = await fetch('/api/user/signout', {
+      method: 'POST',
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      console.log(data.message);
+    } else {
+      dispatch(signoutSuccess());
+    }
+  } catch (error) {
+    console.log(error.message);
+  }
+};
 
 
 
@@ -261,7 +276,7 @@ const handleDeleteUser = async () => {
             </span>
 
 {/* signout  */}
-            <span className='cursor-pointer'>
+            <span  onClick={handleSignout}className='cursor-pointer'>
                 Sign Out
             </span>
         </div>
