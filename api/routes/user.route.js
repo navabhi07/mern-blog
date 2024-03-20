@@ -1,5 +1,5 @@
 import express from 'express';
-import { test, updateUser } from '../controllers/user.controller.js';
+import { test, updateUser,deleteUser } from '../controllers/user.controller.js';
 import { verifyToken } from '../utils/verifyUser.js';
 
 const router=express.Router();
@@ -8,6 +8,7 @@ const router=express.Router();
 //res=receive from the API
 router.get('/test',test);
 //for updating dta jo already added hain usko update krne ke loye 
-router.put('/update/:userId',verifyToken,updateUser)
+router.put('/update/:userId',verifyToken,updateUser);
+router.delete('/delete/:userId',verifyToken,deleteUser);
 
 export default router;
