@@ -2,6 +2,6 @@
 
 export default function AboutUs() {
   return (
-    <div>About</div>
+    <div>Ab</div>
   );
 }
