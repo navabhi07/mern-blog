@@ -7,6 +7,7 @@ import {
     HiArrowSmRight,
     HiDocumentText,
     HiOutlineUserGroup,
+    HiAnnotation,
     
   } from 'react-icons/hi';
   import { useEffect, useState } from 'react';
@@ -71,18 +72,29 @@ export default function DashSidebar() {
             </Link>
           )}
 
-
+        
 
           {currentUser.isAdmin && (
-            <Link to='/dashboard?tab=users'>
-              <Sidebar.Item
-                active={tab === 'users'}
-                icon={HiOutlineUserGroup}
-                as='div'
-              >
-                Users
-              </Sidebar.Item>
-            </Link>
+             <>
+             <Link to='/dashboard?tab=users'>
+               <Sidebar.Item
+                 active={tab === 'users'}
+                 icon={HiOutlineUserGroup}
+                 as='div'
+               >
+                 Users
+               </Sidebar.Item>
+             </Link>
+             <Link to='/dashboard?tab=comments'>
+               <Sidebar.Item
+                 active={tab === 'comments'}
+                 icon={HiAnnotation}
+                 as='div'
+               >
+                 Comments
+               </Sidebar.Item>
+             </Link>
+           </>
           )}
 
 
